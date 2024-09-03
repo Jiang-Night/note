@@ -1,0 +1,57 @@
+Android手机启动:
+    ./lldb-server --server --listen unix-abstract:///data/local/tmp/debug.sock
+
+电脑:
+    lldb
+    platform select remote-android
+    提示：
+          Platform: remote-android
+          Connected: no
+
+    platform connect unix-abstract-connect:///data/local/tmp/debug.sock
+    提示:
+        Platform: remote-android
+        Triple: aarch64-unknown-linux-android
+        OS Version: 34 (5.10.198-android12-9-o-g9a664bc7ff58)
+        Hostname: localhost
+        Connected: yes
+        WorkingDir: /data/local/tmp
+        Kernel: #1 SMP PREEMPT Wed Jun 12 05:55:43 UTC 2024
+
+使用:
+     file /data/local/tmp/main 设置需要调试的文件路径
+     breakpoint set --name main 设置断点在main函数
+     breakpoint set --address 0x1478 设置断点在地址
+     breakpoint set --name main --auto-continue 通过函数名进行断点 并且会在main函数的第一条指令进行停止
+     breakpoint list 查看断点列表
+     breakpoint delete index 删除指定断点
+     run  启动
+     step   进入函数内部
+     next   跳过函数调用
+     register read 查看当前寄存器的状态
+     memory read <address> 查看内存内容
+     disassemble 和gdb一样的功能，反汇编当前指令
+     disassemble --name main 反汇编整个main函数
+     disassemble --start-address 0x400000 --end-address 0x400050 反汇编指定地址范围
+     disassemble --frame 反汇编当前堆栈
+     continue (c) 用于继续执行程序，直到下一个断点
+     memroy read <address> 
+     -f <format>: 指定显示内容的格式 :
+     •	x: 以十六进制显示数据。
+	 •	d: 以十进制显示数据。
+	 •	u: 以无符号十进制显示数据。
+	 •	o: 以八进制显示数据。
+	 •	t: 以二进制显示数据。
+	 •	a: 显示为地址。
+	 •	c: 显示为字符。
+	 •	s: 显示为字符串。
+     -c <count>: 指定要读取的内存块数量。每个内存块的大小由 -s 参数指定（默认为 4 字节）。<count> 是你希望读取的内存块数量,-c 16表示读取 16 个内存块
+     -s <size>: 指定每个内存块的大小，单位是字节 默认情况下，每个内存块的大小为 4 字节
+     --binary: 以二进制格式显示内存内容
+     --skip-zeroes: 跳过显示全为零的内存块
+     --force: 强制读取地址，即使该地址可能不在进程的虚拟内存空间内
+     --count-per-line <count>: 每行显示的内存块数量。与 -c 一起使用可以控制内存的显示方式
+
+
+
+    target stop-hook add -o "register read"  持续监视寄存器，每当程序停止时，LLDB 都会自动显示寄存器的状态

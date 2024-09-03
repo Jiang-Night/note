@@ -1,0 +1,21 @@
+寻址方式
+    数据处理指令的一些寻址方式
+        立即数寻址      mov r0,#0
+        寄存器寻址      mov r0,r1
+        寄存器移位寻址   mov r0,r1,LSL #4   @r0 = r1 << 4
+            LSL 逻辑左移
+            LSR 逻辑右移
+            ROR 循环右移
+            ASR 算术右移
+            RRX 扩展的循环右移
+        Load Store寻址
+            ldr
+                立即数寻址 ldr r0,=0x2
+                寄存器寻址 ldr r0,[r3]   @r0 = *r3
+                         ldr r0,[r3,#4] @r0 = *(r3 + 4)
+                         ldr r0,[r3,#4]! @r0 = *(r3+4) r3 += 4
+                         ldr r0,[r3,r1,LSL #2] @ *(r3 + (r1 << 2))
+            str
+        栈寻址，效果和push pop差不多
+            stmfd
+            ldmfd

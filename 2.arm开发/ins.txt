@@ -1,0 +1,36 @@
+汇编指令
+    跳转指令
+        b   强制跳转
+        bl  带返回值的跳转，LR
+        blx 带返回值和状态切换的跳转 arm->thumb,thumb->arm
+        bx  带状态的强制跳转
+    数据处理指令
+        mov 赋值   
+        add 相加   
+        sub 相减   
+        and 逻辑与 
+        eor 
+        orr 
+        bic 
+
+        mov r0,r1       @r0 = r1
+        add r1,r2       @r0 = r1 + r2
+        sub r1,r2       @r1 = r1 - r2
+        and r0 r1,r2    @r0 = r1 & r2
+        eor r0,r1,r2    @r0 = r1 ^ r2
+        orr r0,r1,r2    @r0 = r1 | r2
+        bic r0,r1,#0xF  @r0(0x12345678) -> r0(0x12345670) 
+    乘法指令
+        mul r0,r1,r2        @r0 = r1 * r2
+        mla r0,r1,r2,r3     @r0 = r1 * r2 + r3
+        smull r0,r1,r2,r3   @r0 = (r1 * r2)的低32位, r1 = (r2 * r3)的高32位
+        smlal r0,r1,r2,r3   @r0 = (r1 * r2)的低32位, r1 = (r2 * r3)的高32位 + r1
+        umull r0,r1,r2,r3   @r0 = (r1 * r2)的低32位, r1 = (r2 * r3)的高32位 (无符号)
+        umlal r0,r1,r2,r3   @r0 = (r1 * r2)的低32位, r1 = (r2 * r3)的高32位 + r1 (无符号)
+    内存访问指令
+        ldr     4字节读取
+        ldrb    1字节读取
+        ldrh    2字节读取
+        str     4字节写入
+        strb    1字节写入
+        strh    2字节写入

@@ -1,0 +1,44 @@
+.text
+    .section	.rodata
+    .section	".note.GNU-stack","",%progbits
+
+符号
+    bl	printf
+
+子程序
+    .globl	main    
+    .type	main,%function
+    .code	32  
+
+main:
+    .fnstart
+    .fnend
+
+arm32寄存器：
+    r0-r12  通用寄存器 主要储存临时数据，r8-r12是比较特殊的寄存器
+    r13(SP) 栈指针寄存器，指向当前栈顶
+    r14(LR) 链接寄存器，储存函数调用返回的地址，函数结束时，PC会从LR中取返回地址
+    r15(PC) 程序计数器，指向当前执行的地址
+
+-状态寄存器
+    CPSR    当前程序状态寄存器
+    SPSR    保存程序状态寄存器
+
+
+        r0 = 0x00000001
+        r1 = 0xfffefee4
+        r2 = 0xfffefeec
+        r3 = 0xfffefec0
+        r4 = 0x00401478  main`main
+        r5 = 0xfffefee0
+        r6 = 0x00000001
+        r7 = 0x00000000
+        r8 = 0x00000000
+        r9 = 0x00000000
+       r10 = 0x00000000
+       r11 = 0xfffefed8
+       r12 = 0xf7c30c54
+        sp = 0xfffefea8
+        lr = 0xf7bd07c1  libc.so`__libc_init + 61
+        pc = 0x00401478  main`main
+      cpsr = 0x80860010
