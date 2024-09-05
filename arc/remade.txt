@@ -1,0 +1,24 @@
+Arc 一个高效的浏览器 但是快捷键有点多，想要更好的使用它 需要一点点精力去了解他
+
+常用快捷键
+    command+s 全屏/取消全屏
+    command+t 打开网址搜索栏
+    command+r 刷新当前页面
+    control+d 打开开发者模式
+    command+w 关闭当前页面
+    command+shift+t恢复关闭的页面
+    command+shift+n打开无痕窗口
+    control+tab 切换浏览器标签页
+    option+鼠标左键 点开链接 快速分屏
+    shift+鼠标左键 点开链接 快速预览 (esc快速退出)
+    option+command+n 打开mini版浏览器 方便查询
+    option+command+⬅️ ➡️可以切换工作区 每个工作区的cookie并不共享
+    切换工作区有三个方式
+        1、option+commadn+左右
+        2、control+1234
+        3、双指左右滑
+
+使用
+    拖动tab标签页到浏览器 可以实现类似Windows一样的分屏
+    右键tab标签可以给tab页重新设置标题名称以及图标
+    可以在tab栏上方新建文件夹 管理tab页面
