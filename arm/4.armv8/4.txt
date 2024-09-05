@@ -10,6 +10,8 @@
     x29 栈寄存器(FP)
     x30 链接寄存器(LR)
     x31 堆栈指针寄存器(SP)
+特殊的寄存器
+    xzr/wzr zero register
 
 b指令 得到的opcode等于十六进制的0x14000000
  31     30    29                0
@@ -21,10 +23,69 @@ b指令 得到的opcode等于十六进制的0x14000000
 0000 0000 0000 0000 0000 0000 0000 0000
 
 
-ldp stp指令详见：https://blog.csdn.net/sinat_32960911/article/details/131533128
-    用于存储和加载通用寄存器到内存
 
 
 armv8手册常用：
     C4:A64 instruction Set Encodeing
     C6:A64 Base instruction Descriptions
+
+算术和逻辑运算指令
+    算术 ADD SUB ADC SBC NEG
+    逻辑 AND BIC ORR EOR EON 
+    比较 CMP CMN TST
+    移位 MOV MVN
+
+位移
+    LSL 左移
+    LSR 右移
+    ASR 算术右移
+    ROR 右旋转
+
+
+常用指令
+    MOV X0,X1               ;x1的值给x0
+    ADD X0,X1,X2            ;寄存器x1+x2 赋值给x0
+    SUB X0,X1,X2            ;寄存器x1-x2 赋值给x0
+
+    AND X0,X0,#0xF          ;X0 = X0 & F
+    ORR X0,X0,#9            ;X0 = X0 | 9
+    EOR X0,X0,#0xF          ;X0 = X0 ^ 0xF
+
+    LDR X0,[X1,#0x10]       ;X0 = read(X1+0x10)
+    LDP X0,X1,[sp,#0x10]    ;X0 = read(sp+0x10) X1 = read(sp+0x10)  ldr plus版 一次性可以操作两个寄存器
+    LDP x29, x30, [sp], #16 ;从sp地址取出 16 byte数据，分别存入x29, x30. 然后 sp+=16
+    STP X29,X30,[sp,#0x10]  ;store pair 将x29 x30的值存入到sp+0x10的地方 并且将sp-10
+
+
+    STR X0,[SP,#0x8]        ; st:store,str:往内存中写数据 将x0寄存器的值放到sp+0x8地址值指向的内存空间中去
+    STUR W0,[x29,#-0x8]     ; 和STR一样 但是偏移值为负数
+
+    CBZ                     ;比较，如果结果等于0就跳转
+    CBNZ                    ;比较，如果结果非0 就跳转
+    CMP                     ;比较 相当于SUBS，影响程序状态寄存器CPSR 
+
+    B                       ;无条件跳转 可以带条件跳转与cmp配合使用
+    BL                      ;带返回值的跳转 返回地址保存在LR(X30)
+    BLR                     ;带返回的跳转 跳转到指令后面跟随寄存器中保存的地址 如：BLR x8  跳转到x8寄存器保存的地址去执行
+    RET                     ;子程序返回指令 返回地址默认保存在LR(X30)
+
+
+寻址格式:
+    [x10,#0x10]     ;sigend offset 从x10+0x10的地址取值
+    [sp,#-0x16]!    ;pre-index 从sp-0x16地址取值,取值后再把sp-16
+                    ;!表示寄存器写，如果没有! 那么只会从sp-16地址取值 而不会修改sp的值
+    [sp],#0x16      ;post-index 从sp取值,取完后再把sp+16
+
+
+跳转:
+    存储在跳转指令中的实际值是相对当前PC 值的一个偏移量，而不是一个绝对地址,它的值由汇编器来计算 它是24位有符号数，左移两位后有符号扩展为32 位，表示的有效偏移为26 位(前后32MB的地址空间)
+
+
+
+参考文章:
+    https://tenloy.github.io/2021/04/17/Arm64-Handbook.html
+    ldp stp指令详见：https://blog.csdn.net/sinat_32960911/article/details/131533128 用于存储和加载通用寄存器到内存
+
+
+
+
